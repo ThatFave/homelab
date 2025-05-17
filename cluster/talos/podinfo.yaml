@@ -9,7 +9,7 @@ spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository
-    name: homelab
+    name: flux-system
   path: ./cluster/talos/podinfo
   prune: true
   timeout: 5m0s
