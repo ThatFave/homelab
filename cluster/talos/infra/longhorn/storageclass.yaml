@@ -5,23 +5,29 @@ metadata:
   annotations:
     longhorn.io/last-applied-configmap: |
       kind: StorageClass
-      apiVersion: storage.k8s.io/v1                                                                                                                                                               metadata:
+      apiVersion: storage.k8s.io/v1
+      metadata:
         name: longhorn
-        annotations:                                                                                                                                                                                  storageclass.kubernetes.io/is-default-class: "true"
+        annotations:
+        storageclass.kubernetes.io/is-default-class: "true"
       provisioner: driver.longhorn.io
-      allowVolumeExpansion: true                                                                                                                                                                  reclaimPolicy: "Delete"
+      allowVolumeExpansion: true
+      reclaimPolicy: "Delete"
       volumeBindingMode: Immediate
-      parameters:                                                                                                                                                                                   numberOfReplicas: "3"
+      parameters:
+      numberOfReplicas: "3"
         staleReplicaTimeout: "30"
-        fromBackup: ""                                                                                                                                                                              fsType: "ext4"
+        fromBackup: ""
+        fsType: "ext4"
         dataLocality: "disabled"
-        unmapMarkSnapChainRemoved: "ignored"                                                                                                                                                        disableRevisionCounter: "true"
+        unmapMarkSnapChainRemoved: "ignored"
+        disableRevisionCounter: "true"
         dataEngine: "v1"
     storageclass.kubernetes.io/is-default-class: "true"
-    creationTimestamp: "2025-05-15T08:59:51Z"
+  creationTimestamp: "2025-05-17T02:10:35Z"
   name: longhorn
-  resourceVersion: "10809"
-  uid: 65c09b03-2539-4dd1-a54d-2fade8041fe6
+  resourceVersion: "436197"
+  uid: f02f6b4c-6fb5-4120-a303-1d0d8d1833fa
 parameters:
   dataEngine: v1
   dataLocality: disabled
@@ -32,4 +38,5 @@ parameters:
   staleReplicaTimeout: "30"
   unmapMarkSnapChainRemoved: ignored
 provisioner: driver.longhorn.io
-reclaimPolicy: Delete 
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
