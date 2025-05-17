@@ -9,13 +9,13 @@ metadata:
       metadata:
         name: longhorn
         annotations:
-        storageclass.kubernetes.io/is-default-class: "true"
+          storageclass.kubernetes.io/is-default-class: "true"
       provisioner: driver.longhorn.io
       allowVolumeExpansion: true
       reclaimPolicy: "Delete"
       volumeBindingMode: Immediate
       parameters:
-      numberOfReplicas: "3"
+        numberOfReplicas: "3"
         staleReplicaTimeout: "30"
         fromBackup: ""
         fsType: "ext4"
@@ -24,10 +24,10 @@ metadata:
         disableRevisionCounter: "true"
         dataEngine: "v1"
     storageclass.kubernetes.io/is-default-class: "true"
-  creationTimestamp: "2025-05-17T02:10:35Z"
+  creationTimestamp: "2025-05-17T02:33:46Z"
   name: longhorn
-  resourceVersion: "436197"
-  uid: f02f6b4c-6fb5-4120-a303-1d0d8d1833fa
+  resourceVersion: "441965"
+  uid: e94e091a-ac4d-480c-a14d-ab00aab19096
 parameters:
   dataEngine: v1
   dataLocality: disabled
