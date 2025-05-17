@@ -1,0 +1,7 @@
+# clusters/my-cluster/infra/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./longhorn/ # Assuming Longhorn StorageClass is here
+  - ./helmrepositories/ # This will include podinfo-repo.yaml if it's in a kustomization.yaml there or directly
+  # - other infra components
