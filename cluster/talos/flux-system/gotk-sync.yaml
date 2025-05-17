@@ -19,7 +19,7 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 1m0s
   path: ./cluster/talos
   prune: true
   sourceRef:
@@ -32,7 +32,7 @@ metadata:
   name: infra
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 1m0s
   path: ./cluster/talos/infra
   prune: true
   sourceRef:
@@ -45,7 +45,7 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 1m0s
   path: ./cluster/talos/apps
   prune: true
   sourceRef:
