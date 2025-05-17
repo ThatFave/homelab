@@ -14,8 +14,16 @@ spec:
         name: baikal
         namespace: baikal
   values:
-    replicaCount: 2
-    ui:
-      message: "Hello from Flux on Talos!"
-    service:
-      type: ClusterIP
+    image:
+      tag: latest
+    env:
+      TZ: Europe/Berlin
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Gi
+      data:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Gi
