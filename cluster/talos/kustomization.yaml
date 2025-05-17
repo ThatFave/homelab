@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - flux-system
 - secrets.yaml
-- podinfo
+# - podinfo
