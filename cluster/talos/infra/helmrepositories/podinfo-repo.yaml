@@ -1,9 +1,8 @@
-# clusters/my-cluster/infra/helmrepositories/podinfo-repo.yaml
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: podinfo
-  namespace: flux-system # Or the namespace where you keep your sources
+  namespace: flux-system
 spec:
   interval: 1h
   url: https://stefanprodan.github.io/podinfo
