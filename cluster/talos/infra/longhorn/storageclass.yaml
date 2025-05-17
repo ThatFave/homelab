@@ -1,0 +1,16 @@
+# clusters/my-cluster/infra/longhorn/storageclass.yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: longhorn # Or your preferred name, e.g., longhorn-ssd
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: Delete # Consider 'Retain' for production data safety
+parameters:
+  numberOfReplicas: "3" # Ensure you have enough nodes/disks for this
+  staleReplicaTimeout: "2880" # 48 hours in minutes; adjust based on recovery strategy
+  fromBackup: ""
+  fsType: "ext4"
+  # Optional: dataLocality: "best-effort" or "strict-local"
+  # Optional: replicaAutoBalance: "best-effort"
+  # For more parameters, refer to Longhorn documentation
