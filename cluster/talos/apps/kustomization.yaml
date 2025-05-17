@@ -2,5 +2,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./podinfo/ # This will include namespace.yaml and helmrelease.yaml if listed in podinfo/kustomization.yaml or directly
-  # - other applications
+  - ./podinfo/
+  - podinfo.yaml
