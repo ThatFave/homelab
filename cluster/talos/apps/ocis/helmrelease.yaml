@@ -1,0 +1,144 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ocis
+  namespace: ocis
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: charts/ocis
+      version: ">=0.7.0"
+      sourceRef:
+        kind: GitRepository
+        name: ocis
+        namespace: ocis
+  values:
+    externalDomain: owncloud.wild-fahrenheit.ts.net
+
+    features:
+      sharing:
+        passwordPolicies:
+          minCharacters: 12
+      externalUserManagement:
+        enabled: true
+        adminUUID: a76fc32e-1be4-3928-a879-bda08b6df9c2
+        ldap:
+          writeable: false
+          uri: ldap://100.114.83.95:3890
+          insecure: true
+          bindDN: uid=ro_admin,ou=people,dc=mhesemann,dc=de
+          user:
+            schema:
+              id: entryuuid
+            baseDN: ou=people,dc=mhesemann,dc=de
+            filter: (&(objectclass=person)(memberOf=cn=users,ou=groups,dc=mhesemann,dc=de))
+            objectClass: inetOrgPerson
+          group:
+            schema:
+              id: uid
+              groupName: uid
+            baseDN: ou=groups,dc=mhesemann,dc=de
+            filter: (objectclass=groupOfUniqueNames)
+            objectClass: groupOfUniqueNames
+
+    secretRefs:
+      ldapSecretRef: ldap-secret
+
+    services:
+      idm:
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOncePod
+          size: 10Gi
+
+      nats:
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOncePod
+          size: 10Gi
+
+      ocm:
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOncePod
+          size: 1Gi
+
+      search:
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOncePod
+          size: 10Gi
+
+      storagesystem:
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOnce
+          size: 5Gi
+
+      storageusers:
+        events:
+          consumer:
+            concurrency: 10
+        storageBackend:
+          driver: ocis
+          driverConfig:
+            ocis:
+              maxConcurrency: 100
+            s3ng:
+              maxConcurrency: 100
+              endpoint:
+              region: default
+              bucket:
+              disableContentSHA256: false
+              putObject:
+                disableMultipart: false
+                sendContentMD5: true
+                concurrentStreamParts: true
+                numThreads: 4
+                partSize: 0
+        maintenance:
+          cleanUpExpiredUploads:
+            enabled: true
+          purgeExpiredTrashBinItems:
+            enabled: true
+          restartPostprocessing:
+            enabled: true
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOnce
+          size: 50Gi
+
+      thumbnails:
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOnce
+          size: 10Gi
+        maintenance:
+          cleanUpOldThumbnails:
+            enabled: true
+
+      web:
+        config:
+          apps:
+            - files
+            - search
+            - text-editor
+            - pdf-viewer
+            - external
+            - admin-settings
+            - epub-reader
+            - preview
+            - app-store
+            - ocm
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOnce
