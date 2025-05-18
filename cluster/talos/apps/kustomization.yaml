@@ -5,4 +5,4 @@ resources:
 - descheduler
 - tailscale-operator
 - portainer
-- ocis
+# - ocis
