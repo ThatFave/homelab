@@ -5,4 +5,4 @@ metadata:
   namespace: ocis
 spec:
   interval: 1h
-  url: https://github.com/owncloud/ocis-charts
+  url: https://github.com/owncloud/ocis-charts/tree/main
