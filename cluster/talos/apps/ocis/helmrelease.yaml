@@ -23,6 +23,8 @@ spec:
       externalUserManagement:
         enabled: true
         adminUUID: a76fc32e-1be4-3928-a879-bda08b6df9c2
+        oidc:
+          issuerURI: mhesemann.de
         ldap:
           writeable: false
           uri: ldap://100.114.83.95:3890
