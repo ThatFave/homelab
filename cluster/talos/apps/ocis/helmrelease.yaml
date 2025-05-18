@@ -115,7 +115,7 @@ spec:
           enabled: true
           accessModes:
             - ReadWriteOnce
-          size: 10Gid
+          size: 10Gi
 
       web:
         config:
