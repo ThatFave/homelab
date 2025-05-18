@@ -104,13 +104,6 @@ spec:
                 concurrentStreamParts: true
                 numThreads: 4
                 partSize: 0
-        maintenance:
-          cleanUpExpiredUploads:
-            enabled: true
-          purgeExpiredTrashBinItems:
-            enabled: true
-          restartPostprocessing:
-            enabled: true
         persistence:
           enabled: true
           accessModes:
@@ -122,10 +115,7 @@ spec:
           enabled: true
           accessModes:
             - ReadWriteOnce
-          size: 10Gi
-        maintenance:
-          cleanUpOldThumbnails:
-            enabled: true
+          size: 10Gid
 
       web:
         config:
