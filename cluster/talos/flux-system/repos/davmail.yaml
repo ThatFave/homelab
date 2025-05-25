@@ -6,3 +6,5 @@ metadata:
 spec:
   interval: 1h
   url: oci://ghcr.io/thatfave/davmail-helm
+  ref:
+    semver: ">= 0.1.0"

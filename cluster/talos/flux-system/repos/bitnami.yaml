@@ -6,3 +6,5 @@ metadata:
 spec:
   interval: 1h
   url: oci://registry-1.docker.io/bitnamicharts
+  ref:
+    semver: ">= 24.6.6"
