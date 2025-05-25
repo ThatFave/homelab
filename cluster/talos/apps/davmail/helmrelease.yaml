@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2
+apiVersion: helm.toolkit.fluxcd.io/v1beta2
 kind: HelmRelease
 metadata:
   name: davmail
@@ -10,6 +10,6 @@ spec:
       chart: davmail
       version: ">=0.1.0"
       sourceRef:
-        kind: HelmRepository
+        kind: OCIRepository
         name: davmail
         namespace: flux-system
