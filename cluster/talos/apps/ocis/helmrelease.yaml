@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: ocis
-        namespace: ocis
+        namespace: flux-system
   values:
     externalDomain: owncloud.wild-fahrenheit.ts.net
 

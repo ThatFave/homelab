@@ -11,8 +11,8 @@ spec:
       version: ">=5.2.0"
       sourceRef:
         kind: HelmRepository
-        name: baikal
-        namespace: baikal
+        name: geek-cookbook
+        namespace: flux-system
   values:
     image:
       tag: latest

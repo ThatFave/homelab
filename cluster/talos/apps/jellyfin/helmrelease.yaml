@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  namespace: jellyfin
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: jellyfin
+      version: ">=10.7.7"
+      sourceRef:
+        kind: HelmRepository
+        name: utkuozdemir
+        namespace: flux-system
+  values:
+    securityContext: {}
+    persistence:
+      data:
+        enabled: true
+        existingClaim: "media-library-pvc"
+        size: 300Gi

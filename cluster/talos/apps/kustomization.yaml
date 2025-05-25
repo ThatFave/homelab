@@ -6,3 +6,5 @@ resources:
 - tailscale-operator
 - portainer
 - ocis
+- keycloak
+- privatebin

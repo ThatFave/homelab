@@ -1,15 +1,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tailscale-operator
-  namespace: tailscale-operator
+  name: privatebin
+  namespace: privatebin
 spec:
   interval: 5m
   chart:
     spec:
-      chart: tailscale-operator
-      version: ">=1.82.5"
+      chart: privatebin
+      version: ">=1.7.5"
       sourceRef:
         kind: HelmRepository
-        name: tailscale
+        name: privatebin
         namespace: flux-system
