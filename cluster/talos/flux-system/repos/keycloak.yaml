@@ -1,10 +1,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: bitnami
+  name: keycloak
   namespace: flux-system
 spec:
   interval: 1h
-  url: oci://registry-1.docker.io/bitnamicharts
+  url: oci://charts.bitnami.com/bitnami/keycloak
   ref:
     semver: ">= 24.6.6"

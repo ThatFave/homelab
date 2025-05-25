@@ -14,7 +14,7 @@ spec:
         name: utkuozdemir
         namespace: flux-system
   values:
-    securityContext: {}
+    securityContext: ''
     persistence:
       data:
         enabled: true

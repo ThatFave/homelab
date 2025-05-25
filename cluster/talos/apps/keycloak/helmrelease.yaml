@@ -7,7 +7,7 @@ spec:
   interval: 5m
   chartRef:
     kind: OCIRepository
-    name: bitnami
+    name: keycloak
     namespace: flux-system
   values:
     adminRealm: "main"
