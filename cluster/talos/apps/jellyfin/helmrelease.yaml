@@ -14,7 +14,10 @@ spec:
         name: utkuozdemir
         namespace: flux-system
   values:
-    securityContext: None
+    securityContext:
+      capabilities:
+        remove:
+          - NET_ADMIN
     persistence:
       data:
         enabled: true
