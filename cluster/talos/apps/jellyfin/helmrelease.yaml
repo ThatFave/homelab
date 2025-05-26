@@ -14,10 +14,6 @@ spec:
         name: utkuozdemir
         namespace: flux-system
   values:
-    securityContext:
-      capabilities:
-        drop:
-          - NET_ADMIN
     persistence:
       data:
         enabled: true
