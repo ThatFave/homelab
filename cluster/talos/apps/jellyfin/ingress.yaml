@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloak-ingress
-  namespace: keycloak
+  name: jellyfin-ingress
+  namespace: jellyfin
   annotations:
     tailscale.com/funnel: "true"
 spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: keycloak
+      name: jellyfin
       port:
-        number: 8080
+        number: 8096
   tls:
   - hosts:
-    - keycloak
+    - jellyfin

@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloak-ingress
-  namespace: keycloak
+  name: davmail-ingress
+  namespace: davmail
   annotations:
     tailscale.com/funnel: "true"
 spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: keycloak
+      name: davmail
       port:
-        number: 8080
+        number: 1080
   tls:
   - hosts:
-    - keycloak
+    - davmail
