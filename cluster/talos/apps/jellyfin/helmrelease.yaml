@@ -8,14 +8,12 @@ spec:
   chart:
     spec:
       chart: jellyfin
-      version: ">=2.0.0"
+      version: ">=3.2.7"
       sourceRef:
         kind: HelmRepository
-        name: utkuozdemir
+        name: djjudas21
         namespace: flux-system
   values:
-    persistence:
-      data:
-        enabled: true
-        existingClaim: "media-library-pvc"
-        size: 300Gi
+    jellyfin:
+      mediaVolumes:
+        - media-library-pvc
