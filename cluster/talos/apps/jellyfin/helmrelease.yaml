@@ -18,11 +18,4 @@ spec:
       mediaVolumes:
         - name: media-library
           readOnly: false
-          volumeSpec:
-            accessModes:
-              - ReadWriteOnce
-            capacity:
-              storage: 300Gi
-            nfs:
-              path: /media-library
-              server: 100.97.177.7
+          existingClaim: media-library-pvc
