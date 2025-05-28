@@ -20,32 +20,9 @@ spec:
       sharing:
         passwordPolicies:
           minCharacters: 12
-      externalUserManagement:
-        enabled: true
-        adminUUID: a76fc32e-1be4-3928-a879-bda08b6df9c2
-        oidc:
-          issuerURI: https://keycloak.wild-fahrenheit.ts.net/realms/ocis/account/
-        ldap:
-          writeable: false
-          uri: ldap://100.114.83.95:3890
-          insecure: true
-          bindDN: uid=ro_admin,ou=people,dc=mhesemann,dc=de
-          user:
-            schema:
-              id: entryuuid
-            baseDN: ou=people,dc=mhesemann,dc=de
-            filter: (&(objectclass=person)(memberOf=cn=users,ou=groups,dc=mhesemann,dc=de))
-            objectClass: inetOrgPerson
-          group:
-            schema:
-              id: uid
-              groupName: uid
-            baseDN: ou=groups,dc=mhesemann,dc=de
-            filter: (objectclass=groupOfUniqueNames)
-            objectClass: groupOfUniqueNames
 
     secretRefs:
-      ldapSecretRef: ldap-secret
+      adminUserSecretRef: admin-user
 
     services:
       idm:
