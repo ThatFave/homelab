@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - davmail
 - descheduler
-- jellyfin
+# - jellyfin
 - ocis
 - portainer
 - privatebin
