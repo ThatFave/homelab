@@ -1,17 +1,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: descheduler
-  namespace: descheduler
+  name: metrics-server
+  namespace: kube-system
 spec:
   interval: 5m
   chart:
     spec:
-      chart: descheduler
-      version: ">=0.33.0"
+      chart: metrics-server
+      version: "3.12.2"
       sourceRef:
         kind: HelmRepository
-        name: descheduler
+        name: metrics-server
         namespace: flux-system
-  values:
-    schedule: "0 2 * * *"
