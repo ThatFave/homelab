@@ -10,3 +10,4 @@ resources:
 - portainer
 - privatebin
 - tailscale-operator
+- vpa
