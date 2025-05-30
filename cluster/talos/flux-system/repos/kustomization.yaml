@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
 - davmail.yaml
 - djjudas21.yaml
-- kubernetes-sigs.yaml
 - ocis.yaml
 - portainer.yaml
 - privatebin.yaml
