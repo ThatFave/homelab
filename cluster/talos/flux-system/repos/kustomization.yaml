@@ -5,7 +5,6 @@ resources:
 - descheduler.yaml
 - djjudas21.yaml
 - fairwinds.yaml
-- metrics-server.yaml
 - ocis.yaml
 - portainer.yaml
 - privatebin.yaml
