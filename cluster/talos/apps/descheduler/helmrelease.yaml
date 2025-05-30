@@ -13,3 +13,5 @@ spec:
         kind: HelmRepository
         name: kubernetes-sigs
         namespace: flux-system
+  values:
+    schedule: "0 2 * * *"
