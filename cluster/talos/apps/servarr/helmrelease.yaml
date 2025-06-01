@@ -17,7 +17,7 @@ spec:
     jellyfin:
       persistence:
         media:
-          existingClaim: "media-library-pvc"
+          existingClaim: "servarr-jellyfin-media"
           accessMode: ReadWriteMany
           size: 300Gi
     sonarr:
