@@ -10,3 +10,4 @@ resources:
 - privatebin.yaml
 - schoenwald.yaml
 - tailscale.yaml
+- vaultwarden.yaml
