@@ -1,10 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- adguard-home.yaml
 - davmail.yaml
 - descheduler.yaml
 - djjudas21.yaml
 - fairwinds.yaml
+- home-assistant.yaml
+- lladp.yaml
 - ocis.yaml
 - portainer.yaml
 - privatebin.yaml
