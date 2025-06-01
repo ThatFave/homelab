@@ -11,7 +11,7 @@ spec:
     service:
       name: etherpad
       port:
-        number: 9001
+        number: 80
   tls:
   - hosts:
     - etherpad
