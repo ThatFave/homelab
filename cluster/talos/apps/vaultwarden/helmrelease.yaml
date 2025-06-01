@@ -16,9 +16,14 @@ spec:
   values:
     domain: "https://vaultwarden.wild-fahrenheit.ts.net"
     signupsVerify: "false"
-    data:
-      name: "vaultwarden-data"
-      size: "15Gi"
-    attachments:
-      name: "vaultwarden-data"
-      size: "15Gi"
+    storage:
+      data:
+        name: "vaultwarden-data"
+        size: "15Gi"
+      attachments:
+        name: "vaultwarden-data"
+        size: "15Gi"
+    adminToken:
+      existingSecret: vaultwarden
+      existingSecretKey: token
+    timeZone: "Europe/Berlin"
