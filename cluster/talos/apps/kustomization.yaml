@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - davmail
 - descheduler
+- etherpad
 - goldilocks
 - jellyfin
 - metrics-server

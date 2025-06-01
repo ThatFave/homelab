@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: etherpad-ingress
+  namespace: etherpad
+  annotations:
+    tailscale.com/funnel: "true"
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: etherpad
+      port:
+        number: 9001
+  tls:
+  - hosts:
+    - etherpad
