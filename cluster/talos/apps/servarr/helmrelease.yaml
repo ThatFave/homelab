@@ -23,6 +23,7 @@ spec:
     sonarr:
       env:
         TZ: "Europe/Berlin"
+      initContainers: ""
     qbittorrent:
       env:
         TZ: "Europe/Berlin"
@@ -35,6 +36,7 @@ spec:
     radarr:
       env:
         TZ: "Europe/Berlin"
+      initContainers: ""
     lidarr:
       enabled: false
     readarr:

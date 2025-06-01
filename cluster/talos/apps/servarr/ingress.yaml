@@ -41,7 +41,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: servarr-qbittorrent
+      name: servarr-qbittorrent-web
       port:
         number: 8080
   tls:
