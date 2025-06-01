@@ -7,9 +7,9 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: adguard-home
+      name: adguard-home-http
       port:
-        number: 3000
+        number: 80
   tls:
   - hosts:
     - adguard-home

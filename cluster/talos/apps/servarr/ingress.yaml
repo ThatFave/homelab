@@ -9,7 +9,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: jellyfin
+      name: servarr-jellyfin
       port:
         number: 9200
   tls:
@@ -25,7 +25,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: sonarr
+      name: servarr-sonarr
       port:
         number: 80
   tls:
@@ -41,7 +41,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: qbittorrent
+      name: servarr-qbittorrent
       port:
         number: 8080
   tls:
@@ -57,7 +57,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: prowlarr
+      name: servarr-prowlarr
       port:
         number: 9696
   tls:
@@ -73,7 +73,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: flaresolverr
+      name: servarr-flaresolverr
       port:
         number: 8191
   tls:
@@ -91,7 +91,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: jellyseerr
+      name: servarr-jellyseerr
       port:
         number: 5055
   tls:
@@ -107,7 +107,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: bazarr
+      name: servarr-bazarr
       port:
         number: 6767
   tls:
@@ -123,7 +123,7 @@ spec:
   ingressClassName: tailscale
   defaultBackend:
     service:
-      name: radarr
+      name: servarr-radarr
       port:
         number: 7878
   tls:
