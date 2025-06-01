@@ -8,5 +8,5 @@ resources:
 - ocis.yaml
 - portainer.yaml
 - privatebin.yaml
-- redhat-cop.yaml
+- schoenwald.yaml
 - tailscale.yaml
