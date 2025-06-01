@@ -11,7 +11,7 @@ spec:
     service:
       name: servarr-jellyfin
       port:
-        number: 9200
+        number: 8096
   tls:
   - hosts:
     - jellyfin
