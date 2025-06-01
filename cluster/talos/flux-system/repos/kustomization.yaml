@@ -4,13 +4,13 @@ resources:
 - adguard-home.yaml
 - davmail.yaml
 - descheduler.yaml
-- djjudas21.yaml
 - fairwinds.yaml
 - home-assistant.yaml
-- lladp.yaml
+- lldap.yaml
 - ocis.yaml
 - portainer.yaml
 - privatebin.yaml
 - schoenwald.yaml
+- servarr.yaml
 - tailscale.yaml
 - vaultwarden.yaml

@@ -7,12 +7,12 @@ resources:
 - etherpad
 - goldilocks
 - home-assistant
-- jellyfin
 - lldap
 - metrics-server
 - ocis
 - portainer
 - privatebin
+- servarr
 - tailscale-operator
 - vaultwarden
 - vpa
