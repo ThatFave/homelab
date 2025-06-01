@@ -26,4 +26,3 @@ spec:
     adminToken:
       existingSecret: vaultwarden
       existingSecretKey: token
-    timeZone: "Europe/Berlin"
