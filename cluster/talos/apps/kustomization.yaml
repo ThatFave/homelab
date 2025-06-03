@@ -7,7 +7,6 @@ resources:
 - etherpad
 - goldilocks
 - home-assistant
-- lldap
 - metrics-server
 - ocis
 - portainer
