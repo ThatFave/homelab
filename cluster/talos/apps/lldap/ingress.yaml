@@ -13,19 +13,3 @@ spec:
   tls:
   - hosts:
     - lldap
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ldap-ingress
-  namespace: lldap
-spec:
-  ingressClassName: tailscale
-  defaultBackend:
-    service:
-      name: lldap-ldap
-      port:
-        number: 3890
-  tls:
-  - hosts:
-    - ldap
