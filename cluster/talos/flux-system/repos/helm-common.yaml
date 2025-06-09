@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: helm-common
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: oci://ghcr.io/thatfave/helm-common/helm-common-chart
+  ref:
+    semver: ">= 0.1.0"
