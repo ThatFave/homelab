@@ -25,10 +25,7 @@ spec:
       global:
         postgresql:
           auth:
-            existingSecret:
-              enabled: true
-              secretName: immich
-              secretKey: password
+            existingSecret: immich
 
     redis:
       enabled: true
