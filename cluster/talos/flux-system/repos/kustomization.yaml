@@ -6,7 +6,6 @@ resources:
 - descheduler.yaml
 - fairwinds.yaml
 - home-assistant.yaml
-- immich.yaml
 - ocis.yaml
 - portainer.yaml
 - privatebin.yaml
