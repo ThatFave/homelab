@@ -21,7 +21,9 @@ spec:
       config:
         enabled: true
         retain: true
+        accessMode: ReadWriteOnce
       media:
         enabled: true
         mountPath: /opt/recipes/mediafiles
         retain: true
+        accessMode: ReadWriteOnce
