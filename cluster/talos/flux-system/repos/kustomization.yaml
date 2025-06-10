@@ -5,7 +5,6 @@ resources:
 - davmail.yaml
 - descheduler.yaml
 - fairwinds.yaml
-- helm-common.yaml
 - home-assistant.yaml
 - immich.yaml
 - ocis.yaml
