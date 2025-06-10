@@ -24,3 +24,11 @@ spec:
 
     rbac:
       enabled: true
+
+    envSecrets:
+      authOidcCredentials:
+        existingSecret: "homarr"
+      authLdapCredentials:
+        existingSecret: "homarr"
+      dbCredentials:
+        existingSecret: "homarr"
