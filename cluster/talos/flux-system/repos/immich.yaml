@@ -1,10 +1,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: helm-common
+  name: immich
   namespace: flux-system
 spec:
   interval: 1h
-  url: oci://ghcr.io/thatfave/helm-common/helm-common-chart
+  url: oci://ghcr.io/maybeanerd/immich-charts/immich
   ref:
-    semver: ">= 0.1.1"
+    semver: ">= 0.9.3"

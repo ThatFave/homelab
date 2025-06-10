@@ -7,61 +7,34 @@ spec:
   interval: 5m
   chartRef:
     kind: OCIRepository
-    name: helm-common
+    name: immich
     namespace: flux-system
   values:
-    containers:
-      - name: immich-server
-        image:
-          repository: ghcr.io/immich-app/immich-server
-          tag: release
-        env:
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: immich
-                key: db-password
-        volumeMounts:
-          - name: media
-            mountPath: /usr/src/app/upload
+    image:
+      tag: v1.134.0
 
-      - name: immich-machine-learning
-        image:
-          repository: ghcr.io/immich-app/immich-machine-learning
-          tag: release
-        env:
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: immich
-                key: db-password
-          - name: DB_USERNAME
-            value: postgres
-          - name: DB_DATABASE_NAME
-            value: postgres
-        volumeMounts:
-          - name: model-cache
-            mountPath: /cache
+    immich:
+      persistence:
+        library:
+          existingClaim: immich-library
 
-      - name: vectorchord
-        image:
-          repository: tensorchord/vchord-postgres
-          tag: pg17-v0.4.2
-        env:
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: immich
-                key: db-password
-        volumeMounts:
-          - name: vectorchord-data
-            mountPath: /var/lib/postgresql/data
+    postgresql:
+      enabled: true
+      image:
+        tag: pg14-v0.3.0
+      global:
+        postgresql:
+          auth:
+            existingSecret:
+              enabled: true
+              secretName: immich
+              secretKey: password
 
-      - name: redis
-        image:
-          repository: docker.io/valkey/valkey
-          tag: 8-bookworm
+    redis:
+      enabled: true
 
-    service:
-      type: ClusterIP
-      port: 2283
+    machine-learning:
+      persistence:
+        cache:
+          type: pvc
+          accessMode: ReadWriteOnce
