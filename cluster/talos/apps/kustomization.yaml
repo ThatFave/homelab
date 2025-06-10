@@ -6,6 +6,7 @@ resources:
 - descheduler
 - etherpad
 - goldilocks
+- homarr
 - home-assistant
 - metrics-server
 - ocis
@@ -13,5 +14,6 @@ resources:
 - privatebin
 - servarr
 - tailscale-operator
+- tandoor
 - vaultwarden
 - vpa

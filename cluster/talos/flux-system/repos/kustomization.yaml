@@ -5,6 +5,7 @@ resources:
 - davmail.yaml
 - descheduler.yaml
 - fairwinds.yaml
+- homarr.yaml
 - home-assistant.yaml
 - ocis.yaml
 - portainer.yaml
@@ -12,4 +13,5 @@ resources:
 - schoenwald.yaml
 - servarr.yaml
 - tailscale.yaml
+- tandoor.yaml
 - vaultwarden.yaml
