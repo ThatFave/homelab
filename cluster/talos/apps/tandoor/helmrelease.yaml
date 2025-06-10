@@ -22,8 +22,10 @@ spec:
         enabled: true
         retain: true
         accessMode: ReadWriteOnce
+        size: 1Gi
       media:
         enabled: true
         mountPath: /opt/recipes/mediafiles
         retain: true
         accessMode: ReadWriteOnce
+        size: 5Gi
