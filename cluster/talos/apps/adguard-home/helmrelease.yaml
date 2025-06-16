@@ -18,8 +18,8 @@ spec:
       https:
         enabled: false
       dnsOverTls:
-        enabled: false
+        enabled: true
       dnsOverQuic:
-        enabled: false
+        enabled: true
       dnscrypt:
-        enabled: false
+        enabled: true
