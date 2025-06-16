@@ -22,4 +22,4 @@ spec:
       dnsOverQuic:
         enabled: true
       dnscrypt:
-        enabled: true
+        enabled: false
