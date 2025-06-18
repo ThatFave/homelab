@@ -20,28 +20,45 @@ spec:
           existingClaim: "servarr-jellyfin-media"
           accessMode: ReadWriteMany
           size: 300Gi
+      image:
+        tag: "latest"
     sonarr:
       env:
         TZ: "Europe/Berlin"
+      image:
+        tag: "latest"
     qbittorrent:
       env:
         TZ: "Europe/Amsterdam"
+      image:
+        tag: "latest"
     prowlarr:
       env:
         TZ: "Europe/Berlin"
+      image:
+        tag: "latest"
     bazarr:
       env:
         TZ: "Europe/Berlin"
+      image:
+        tag: "latest"
     radarr:
       env:
         TZ: "Europe/Berlin"
+      image:
+        tag: "latest"
     lidarr:
       enabled: false
     readarr:
       enabled: false
     cleanuperr:
       enabled: true
+      image:
+        tag: "latest"
       secrets:
         existingSecret: "servarr"
       env:
         TZ: "Europe/Berlin"
+    jellyseerr:
+      image:
+        tag: "latest"
