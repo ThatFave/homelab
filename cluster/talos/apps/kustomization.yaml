@@ -9,7 +9,6 @@ resources:
 - homarr
 - home-assistant
 - metrics-server
-- ocis
 - portainer
 - privatebin
 - servarr
