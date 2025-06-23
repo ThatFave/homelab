@@ -3,13 +3,11 @@ kind: Kustomization
 resources:
 - adguard-home.yaml
 - davmail.yaml
-- descheduler.yaml
 - fairwinds.yaml
 - homarr.yaml
 - home-assistant.yaml
 - portainer.yaml
 - privatebin.yaml
-- schoenwald.yaml
 - servarr.yaml
 - tailscale.yaml
 - tandoor.yaml

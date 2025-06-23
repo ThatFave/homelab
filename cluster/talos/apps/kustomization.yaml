@@ -3,12 +3,9 @@ kind: Kustomization
 resources:
 - adguard-home
 - davmail
-- descheduler
-- etherpad
 - goldilocks
 - homarr
 - home-assistant
-- metrics-server
 - portainer
 - privatebin
 - servarr
