@@ -7,7 +7,6 @@ resources:
 - fairwinds.yaml
 - homarr.yaml
 - home-assistant.yaml
-- ocis.yaml
 - portainer.yaml
 - privatebin.yaml
 - schoenwald.yaml
