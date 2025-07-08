@@ -1,1 +1,3 @@
 .decrypted~*.yaml
+secrets.json
+vendor/

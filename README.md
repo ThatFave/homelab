@@ -1,3 +1,5 @@
 # Homelab
 
-to be deployed with flux.
+to be deployed with tanka
+
+jb update -> tk apply

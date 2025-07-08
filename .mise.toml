@@ -1,0 +1,16 @@
+[tools]
+age = "latest"
+argocd = "latest"
+helm = "latest"
+jsonnet-bundler = "latest"
+k9s = "latest"
+kubectl = "latest"
+sops = "latest"
+tanka = "latest"
+
+[env]
+_.file = "lib/secrets.enc.json"
+
+[settings.sops]
+age_key_file = "~/.config/sops/age/keys.txt"
+age_recipients = "age18ef0t9rgwe9gth0080hhv6zupu4fu64ugfplgjcx9lv4ev8ya9lqyystv7"
