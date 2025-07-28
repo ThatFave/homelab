@@ -30,9 +30,6 @@ local serviceFor = k.util.serviceFor;
       port: 1080,
       storage: '1Gi',
     },
-    descheduler: {
-      name: 'descheduler',
-    },
     homarr: {
       name: 'homarr',
       image: 'ghcr.io/homarr-labs/homarr:latest',
@@ -45,9 +42,6 @@ local serviceFor = k.util.serviceFor;
       port: 8123,
       storage: '1Gi',
     },
-    metricsserver: {
-      name: 'metricsserver',
-    },
     syncthing: {
       name: 'syncthing',
       image: 'linuxserver/syncthing:latest',
@@ -57,23 +51,11 @@ local serviceFor = k.util.serviceFor;
       smbImage: 'dockurr/samba:latest',
       smbPort: 445,
     },
-    portainer: {
-      name: 'portainer',
-      image: 'portainer/portainer-ce:latest',
-      port: 9000,
-      storage: '1Gi',
-    },
     privatebin: {
       name: 'privatebin',
       image: 'privatebin/fs:latest',
       port: 8080,
       storage: '1Gi',
-    },
-    vaultwarden: {
-      name: 'vaultwarden',
-      image: 'vaultwarden/server:latest',
-      port: 80,
-      storage: '15Gi',
     },
     servarr: {
       name: 'servarr',
@@ -114,7 +96,7 @@ local serviceFor = k.util.serviceFor;
     },
   },
 
-  dev: namespace.new(name=$._config.global.namespace)
+  prod: namespace.new(name=$._config.global.namespace)
        + namespace.mixin.metadata.withLabels(labels={ 'goldilocks.fairwinds.com/enabled': 'true' }),
 
   adguardhome: {
@@ -237,23 +219,6 @@ local serviceFor = k.util.serviceFor;
     ),
   },
 
-  portainer: {
-    deployment: deployment.new(
-      name=$._config.portainer.name,
-      replicas=1,
-      containers=[
-        container.new(name=$._config.portainer.name, image=$._config.portainer.image)
-        + container.mixin.withPorts(ports=[containerPort.new(name=$._config.portainer.name, port=$._config.portainer.port)]),
-      ],
-    ) + deployment.pvcVolumeMount(name=$._config.portainer.name, path='/data'),
-    data: pvc(name=$._config.portainer.name, size=$._config.portainer.storage),
-    service: serviceFor(deployment=self.deployment),
-    ingress: tailscale_ingress(
-      name=$._config.portainer.name,
-      port=$._config.portainer.port,
-    ),
-  },
-
   privatebin: {
     deployment: deployment.new(
       name=$._config.privatebin.name,
@@ -268,24 +233,6 @@ local serviceFor = k.util.serviceFor;
     ingress: tailscale_ingress(
       name=$._config.privatebin.name,
       port=$._config.privatebin.port,
-      funnel=true,
-    ),
-  },
-
-  vaultwarden: {
-    deployment: deployment.new(
-      name=$._config.vaultwarden.name,
-      replicas=1,
-      containers=[
-        container.new(name=$._config.vaultwarden.name, image=$._config.vaultwarden.image)
-        + container.mixin.withPorts(ports=[containerPort.new(name=$._config.vaultwarden.name, port=$._config.vaultwarden.port)]),
-      ],
-    ) + deployment.pvcVolumeMount(name=$._config.vaultwarden.name, path='/data'),
-    data: pvc(name=$._config.vaultwarden.name, size=$._config.vaultwarden.storage),
-    service: serviceFor(deployment=self.deployment),
-    ingress: tailscale_ingress(
-      name=$._config.vaultwarden.name,
-      port=$._config.vaultwarden.port,
       funnel=true,
     ),
   },
