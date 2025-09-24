@@ -22,6 +22,8 @@
     }
   ],
 
+  "ignorePaths": ["lib/**"],
+
   "schedule": ["after 2am every weekday"],
   "prConcurrentLimit": 5,
   "timezone": "UTC"
