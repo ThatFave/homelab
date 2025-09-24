@@ -377,7 +377,10 @@
                         + container.withPorts([
                           containerPort.newNamed(name=name, containerPort=port),
                         ])
-                        + container.mixin.withEnv(env={ name: 'SOFT_SERVE_INITIAL_ADMIN_KEYS', value: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC0P7n8nCfFc79DDIEQfVzRZ+zaX3L9F8NRqsXoirdWL' }),
+                        + container.mixin.withEnv(env=[
+                          { name: 'SOFT_SERVE_INITIAL_ADMIN_KEYS', value: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC0P7n8nCfFc79DDIEQfVzRZ+zaX3L9F8NRqsXoirdWL' },
+                          { name: 'SOFT_SERVE_SSH_PUBLIC_URL', value: 'ssh://10.20.0.202' },
+                        ]),
                       ],
                     )
                     + deployment.pvcVolumeMount(name=name + '-data', path='/soft-serve'),
