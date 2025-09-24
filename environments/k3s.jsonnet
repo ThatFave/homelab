@@ -368,6 +368,7 @@
         local name = 'softserve',
         local image = 'charmcli/soft-serve:latest',
         local port = 23231,
+        local ip = '10.20.0.202',
         deployment: deployment.new(
                       name=name,
                       replicas=1,
@@ -383,10 +384,11 @@
         config: persistentVolumeClaim.new(name=name + '-data')
                 + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
                 + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
-        service: service.new(name=name, selector={ name: name }, ports=[
-          servicePort.newNamed(name=name, port=port, targetPort=port),
-        ]),
-        ingress: ingressTailscale(name=name, port=port),
+        serviceDns: service.new(name=name, selector={ name: name }, ports=[
+                      servicePort.newNamed(name='ssh', port=22, targetPort=port),
+                    ])
+                    + service.mixin.spec.withType(type='LoadBalancer')
+                    + service.mixin.spec.withLoadBalancerIP(loadBalancerIP=ip),
       },
 
       hetznerddns: {
