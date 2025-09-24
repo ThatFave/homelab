@@ -1,0 +1,11 @@
+[tools]
+helm = "latest"
+jsonnet-bundler = "latest"
+k9s = "latest"
+kubectl = "latest"
+tanka = "latest"
+jq = "latest"
+kubeseal = "latest"
+
+[env]
+KUBECONFIG = "./kubeconfig.yaml"

@@ -1,0 +1,21 @@
+{
+  "extends": ["config:base"],
+  "regexManagers": [
+    {
+      "fileMatch": ["\\.jsonnet$", "\\.libsonnet$", ".*\\.tk\\.jsonnet$"],
+      "matchStrings": [
+        "image\\s*=\\s*'(?<depName>[^:]+):(?<currentValue>[^']+)'"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "loose"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "pinDigests": false,
+      "matchUpdateTypes": ["major", "minor", "patch"]
+    }
+  ]
+}
+

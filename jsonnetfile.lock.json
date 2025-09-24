@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "tanka-util"
+        }
+      },
+      "version": "5d2c9c1fa845da48e6049bbbd8e98b9d6aab1805",
+      "sum": "ShSIissXdvCy1izTCDZX6tY7qxCoepE5L+WJ52Hw7ZQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/docsonnet.git",
+          "subdir": "doc-util"
+        }
+      },
+      "version": "6ac6c69685b8c29c54515448eaca583da2d88150",
+      "sum": "BrAL/k23jq+xy9oA7TWIhUx07dsA/QLm3g7ktCwe//U="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/k8s-libsonnet.git",
+          "subdir": "1.33"
+        }
+      },
+      "version": "291653b2c17d03e855e7e00ce0e4ec25502b2ce2",
+      "sum": "FTic3KWLxPcO/DpkwJ6AgvWmbxouYiAVrflXtbAiIhY="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/metallb-libsonnet.git",
+          "subdir": "0.14"
+        }
+      },
+      "version": "b5f17d3c5a32918dc0f6f92e713580a506eb585f",
+      "sum": "mHFKwhTGQrGIl47npD59lhDnXq6GAdiOILgUq8F6ZPM="
+    }
+  ],
+  "legacyImports": false
+}
