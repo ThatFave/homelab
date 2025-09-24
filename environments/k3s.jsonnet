@@ -140,7 +140,7 @@
                       ],
                     )
                     + deployment.pvcVolumeMount(name=name + '-work', path='/opt/adguardhome/work')
-                    + deployment.pvcVolumeMount(name=name + '-config', path='/opt/adguardhome/config'),
+                    + deployment.pvcVolumeMount(name=name + '-config', path='/opt/adguardhome/conf'),
         work: persistentVolumeClaim.new(name=name + '-work')
               + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
               + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
