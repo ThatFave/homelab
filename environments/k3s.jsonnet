@@ -379,7 +379,7 @@
                         ])
                         + container.mixin.withEnv(env=[
                           { name: 'SOFT_SERVE_INITIAL_ADMIN_KEYS', value: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC0P7n8nCfFc79DDIEQfVzRZ+zaX3L9F8NRqsXoirdWL' },
-                          { name: 'SOFT_SERVE_SSH_PUBLIC_URL', value: 'ssh://10.20.0.202' },
+                          { name: 'SOFT_SERVE_SSH_PUBLIC_URL', value: 'ssh://10.20.0.202:2222' },
                         ]),
                       ],
                     )
@@ -388,7 +388,7 @@
                 + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
                 + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
         serviceDns: service.new(name=name, selector={ name: name }, ports=[
-                      servicePort.newNamed(name='ssh', port=22, targetPort=port),
+                      servicePort.newNamed(name='ssh', port=2222, targetPort=port),
                     ])
                     + service.mixin.spec.withType(type='LoadBalancer')
                     + service.mixin.spec.withLoadBalancerIP(loadBalancerIP=ip),
