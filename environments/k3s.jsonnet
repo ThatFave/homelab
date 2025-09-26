@@ -445,23 +445,6 @@
                  + service.mixin.spec.withType(type='NodePort'),
       },
 
-      // currently throws weird warning.
-      //
-      // tandoor: {
-      //   local name = 'tandoor',
-      //   local port = 8080,
-      //   tandoor: helm.template(name=name, chart='../lib/charts/tandoor', conf={
-      //     namespace: $.data.config.global.namespace,
-      //     values: {
-      //       persistence: {
-      //         config: { enabled: 'true', accessMode: 'ReadWriteOnce', size: '1Gi' },
-      //         media: { enabled: 'true', accessMode: 'ReadWriteOnce', size: '1Gi' },
-      //       },
-      //     },
-      //   }),
-      //   ingress: ingressTailscale(name=name, port=port),
-      // },
-
       tuwunel: {
         local name = 'tuwunel',
         local port = 80,
