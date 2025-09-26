@@ -1,0 +1,72 @@
+image:
+  repository: girlbossceo/conduwuit
+  tag: "v0.4.3-d875e0c1c00d8e42b83dd562c3945c077898746d"
+  pullPolicy: IfNotPresent
+
+config:
+  server_name: "your.server.name"
+  max_request_size: "20000000"
+  allow_registration: false
+  allow_federation: false
+  trusted_servers: []
+
+extraEnv: []
+
+## Add additional labels to all resources
+extraLabels: {}
+
+service:
+  annotations: {}
+  type: ClusterIP
+  clusterIP: "None"
+
+  port: 80
+  ## List of IP addresses at which the service is available
+  ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+  ##
+  externalIPs: []
+
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+
+ingress:
+  enabled: false
+  class:
+  # You will probably want to provide either large upload size limits, or no
+  #    upload size limit; for example, if using nginx-ingress, include
+  #    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  annotations: {}
+  path: /
+  hosts:
+    - conduwuit
+  tls: false
+
+## Persist configuration to a persistent volume
+persistence:
+  ## Data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If unset, storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  data:
+    enabled: true
+    existingClaim:
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: 16Gi
+
+resources:
+  requests:
+    cpu: "1"
+    memory: "256Mi"
+  limits:
+    cpu: "2"
+    memory: "512Mi"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

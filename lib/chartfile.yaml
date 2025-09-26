@@ -16,13 +16,15 @@ repositories:
   url: https://metallb.github.io/metallb
 - name: sealed-secrets
   url: https://bitnami-labs.github.io/sealed-secrets
+- name: cronce
+  url: https://charts.cronce.io/
 requires:
 - chart: gissilabs/vaultwarden
   version: 1.2.6
 - chart: longhorn/longhorn
   version: 1.9.1
 - chart: tailscale/tailscale-operator
-  version: 1.86.5
+  version: 1.88.2
 - chart: portainer/portainer
   version: 2.33.1
 - chart: tandoor/tandoor
@@ -31,4 +33,6 @@ requires:
   version: v0.15.2
 - chart: sealed-secrets/sealed-secrets
   version: 2.17.7
+- chart: cronce/conduwuit
+  version: 0.1.0
 version: 1

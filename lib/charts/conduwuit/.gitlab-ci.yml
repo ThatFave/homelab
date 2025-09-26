@@ -1,0 +1,22 @@
+stages:
+  - test
+  - deploy
+
+Test chart:
+  stage: test
+  image: alpine/helm:latest
+  script:
+    - helm lint .
+    # TODO:  helm test
+
+Deploy chart:
+  stage: deploy
+  image: alpine/helm:latest
+  before_script:
+    - apk add -U git
+    - helm plugin install https://github.com/chartmuseum/helm-push.git
+  script:
+    - helm cm-push . https://charts.cronce.io
+  only:
+    - tags
+

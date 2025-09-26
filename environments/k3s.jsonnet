@@ -40,13 +40,27 @@
 
     k3s: {
       prod: namespace.new(name=$.data.config.global.namespace),
+      longhorn_sealedsecret: import '../secrets/cifs-secret.sealed.json',
+      tailscale_sealedsecret: import '../secrets/operator-oauth.sealed.json',
+      vaultwarden_sealedsecret: import '../secrets/vaultwarden.sealed.json',
+      homarr_sealedsecret: import '../secrets/homarr.sealed.json',
+      hetznerddns_sealedsecret: import '../secrets/hetznerddns.sealed.json',
+      minio_sealedsecret: import '../secrets/minio.sealed.json',
+      tuwunel_sealedsecret: import '../secrets/tuwunel.sealed.json',
 
       longhorn: {
         local name = 'longhorn',
         local port = 80,
-        longhorn_sealedsecret: import '../secrets/cifs-secret.sealed.json',
         longhorn: helm.template(name=name, chart='../lib/charts/longhorn', conf={
           namespace: $.data.config.global.namespace,
+          values: {
+            persistence: {
+              defaultClassReplicaCount: 1,
+            },
+            defaultSettings: {
+              defaultReplicaCount: 1,
+            },
+          },
         }),
         ingress: ingressTailscale(name=name, port=port, svcName='longhorn-frontend'),
       },
@@ -68,20 +82,16 @@
         local name = 'sealedsecrets',
         sealedsecrets: helm.template(name=name, chart='../lib/charts/sealed-secrets', conf={
           namespace: $.data.config.global.namespace,
+          values: {
+            secretName: 'sealed-secrets-secret',
+          },
         }),
       },
 
       tailscale_operator: {
         local name = 'tailscale',
-        tailscale_sealedsecret: import '../secrets/tailscale-operator.sealed.json',
         tailscale_operator: helm.template(name=name, chart='../lib/charts/tailscale-operator', conf={
           namespace: $.data.config.global.namespace,
-          values: {
-            oauth: {
-              clientId: { valueFrom: { secretKeyRef: { name: 'tailscale-operator-secret', key: 'clientId' } } },
-              clientSecret: { valueFrom: { secretKeyRef: { name: 'tailscale-operator-secret', key: 'clientSecret' } } },
-            },
-          },
         }),
       },
 
@@ -102,7 +112,6 @@
       vaultwarden: {
         local name = 'vaultwarden',
         local port = 80,
-        vaultwarden_sealedsecret: import '../secrets/vaultwarden.sealed.json',
         vaultwarden: helm.template(name=name, chart='../lib/charts/vaultwarden', conf={
           namespace: $.data.config.global.namespace,
           values: {
@@ -187,7 +196,6 @@
         local name = 'homarr',
         local image = 'ghcr.io/homarr-labs/homarr:latest',
         local port = 7575,
-        homarr_sealedsecret: import '../secrets/homarr.sealed.json',
         deployment: deployment.new(
                       name=name,
                       replicas=1,
@@ -397,7 +405,6 @@
       hetznerddns: {
         local name = 'hetznerddns',
         local image = 'filiparag/hetzner_ddns:latest',
-        hetznerddns_sealedsecret: import '../secrets/hetznerddns.sealed.json',
         deployment: deployment.new(
                       name=name,
                       replicas=1,
@@ -457,6 +464,30 @@
       //   ingress: ingressTailscale(name=name, port=port),
       // },
 
+      tuwunel: {
+        local name = 'tuwunel',
+        local port = 80,
+        tuwunel: helm.template(name=name, chart='../lib/charts/conduwuit', conf={
+          namespace: $.data.config.global.namespace,
+          values: {
+            image: {
+              repository: 'ghcr.io/matrix-construct/tuwunel',
+              tag: 'latest',
+            },
+            service: {
+              clusterIP: '',
+            },
+            config: {
+              server_name: 'tuwunel.wild-fahrenheit.ts.net',
+              allow_registration: 'true',
+              allow_federation: 'true',
+              trusted_servers: ['matrix.org'],
+            },
+            extraEnv: [{ name: 'TUWUNEL_REGISTRATION_TOKEN', value: { valueFrom: { secretKeyRef: { name: 'tuwunel-secret', key: 'registration_token' } } } }],
+          },
+        }),
+        ingress: ingressTailscale(name=name, port=port, svcName='tuwunel-conduwuit', funnel=true),
+      },
     },
   },
 }
