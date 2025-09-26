@@ -6,6 +6,39 @@ kubectl = "latest"
 tanka = "latest"
 jq = "latest"
 kubeseal = "latest"
+yq = "latest"
 
 [env]
 KUBECONFIG = "./kubeconfig.yaml"
+
+[tasks.update-charts]
+description = "Update chart versions in lib/chartfile.yaml to latest from data.json"
+dir = "lib"
+run = """
+tk tool charts version-check \
+  | jq -r '
+      to_entries
+      | map(select(.value.using_latest_version == false))
+      | map([.value.name, .value.latest_version.version] | @tsv)
+      | .[]
+    ' | while IFS=$'\\t' read -r chart version; do
+
+      echo "Updating $chart to version $version"
+
+      # Patch or create the version field safely
+      yq -i '
+        (.requires[] | select(.chart == "'$chart'") | .version) = "'$version'"
+      ' chartfile.yaml
+
+done
+
+# Vendor updated charts
+echo "Vendoring updated charts..."
+tk tool charts vendor
+"""
+
+[tasks.apply]
+run = "tk apply environments/k3s.jsonnet"
+
+[tasks.prune]
+run = "tk prune environments/k3s.jsonnet"

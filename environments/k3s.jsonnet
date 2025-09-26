@@ -1,5 +1,3 @@
-// TODO: https://chatgpt.com/c/68d2e1e8-6504-832e-91a3-32d807105388
-
 {
   apiVersion: 'tanka.dev/v1alpha1',
   kind: 'Environment',

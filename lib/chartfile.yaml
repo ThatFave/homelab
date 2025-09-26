@@ -1,38 +1,38 @@
 directory: charts
 repositories:
-- name: stable
-  url: https://charts.helm.sh/stable
-- name: gissilabs
-  url: https://gissilabs.github.io/charts/
-- name: longhorn
-  url: https://charts.longhorn.io
-- name: tailscale
-  url: https://pkgs.tailscale.com/helmcharts
-- name: portainer
-  url: https://portainer.github.io/k8s/
-- name: tandoor
-  url: https://charts.gabe565.com
-- name: metallb
-  url: https://metallb.github.io/metallb
-- name: sealed-secrets
-  url: https://bitnami-labs.github.io/sealed-secrets
-- name: cronce
-  url: https://charts.cronce.io/
+  - name: stable
+    url: https://charts.helm.sh/stable
+  - name: gissilabs
+    url: https://gissilabs.github.io/charts/
+  - name: longhorn
+    url: https://charts.longhorn.io
+  - name: tailscale
+    url: https://pkgs.tailscale.com/helmcharts
+  - name: portainer
+    url: https://portainer.github.io/k8s/
+  - name: tandoor
+    url: https://charts.gabe565.com
+  - name: metallb
+    url: https://metallb.github.io/metallb
+  - name: sealed-secrets
+    url: https://bitnami-labs.github.io/sealed-secrets
+  - name: cronce
+    url: https://charts.cronce.io/
 requires:
-- chart: gissilabs/vaultwarden
-  version: 1.2.6
-- chart: longhorn/longhorn
-  version: 1.9.1
-- chart: tailscale/tailscale-operator
-  version: 1.88.2
-- chart: portainer/portainer
-  version: 2.33.1
-- chart: tandoor/tandoor
-  version: 0.9.9
-- chart: metallb/metallb
-  version: v0.15.2
-- chart: sealed-secrets/sealed-secrets
-  version: 2.17.7
-- chart: cronce/conduwuit
-  version: 0.1.0
+  - chart: gissilabs/vaultwarden
+    version: 1.2.6
+  - chart: longhorn/longhorn
+    version: 1.9.1
+  - chart: tailscale/tailscale-operator
+    version: 1.88.2
+  - chart: portainer/portainer
+    version: 2.33.1
+  - chart: tandoor/tandoor
+    version: 0.9.9
+  - chart: metallb/metallb
+    version: 0.15.2
+  - chart: sealed-secrets/sealed-secrets
+    version: 2.17.7
+  - chart: cronce/conduwuit
+    version: 0.1.0
 version: 1
