@@ -469,6 +469,67 @@
         }),
         ingress: ingressTailscale(name=name, port=port, svcName='tuwunel-conduwuit', funnel=true),
       },
+
+      actualbudget: {
+        local name = 'actualbudget',
+        local image = 'docker.io/actualbudget/actual-server:latest',
+        local port = 5006,
+        deployment: deployment.new(
+                      name=name,
+                      replicas=1,
+                      containers=[
+                        container.new(name=name, image=image)
+                        + container.withPorts([
+                          containerPort.newNamed(name=name, containerPort=port),
+                        ]),
+                      ],
+                    )
+                    + deployment.pvcVolumeMount(name=name + '-data', path='/data'),
+        config: persistentVolumeClaim.new(name=name + '-data')
+                + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
+                + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
+        service: service.new(name=name, selector={ name: name }, ports=[
+          servicePort.newNamed(name=name, port=port, targetPort=port),
+        ]),
+        ingress: ingressTailscale(name=name, port=port),
+      },
+
+      archivebox: {
+        local name = 'archivebox',
+        local image = 'docker.io/archivebox/archivebox:latest',
+        local port = 8000,
+        deployment: deployment.new(
+                      name=name,
+                      replicas=1,
+                      containers=[
+                        container.new(name=name, image=image)
+                        + container.withPorts([
+                          containerPort.newNamed(name=name, containerPort=port),
+                        ])
+                        + container.withEnv(env=[
+                          { name: 'CSRF_TRUSTED_ORIGINS', value: 'https://archivebox.wild-fahrenheit.ts.net' },
+                        ]),
+                      ],
+                    )
+                    + deployment.pvcVolumeMount(name=name + '-data', path='/data'),
+        config: persistentVolumeClaim.new(name=name + '-data')
+                + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
+                + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
+        service: service.new(name=name, selector={ name: name }, ports=[
+          servicePort.newNamed(name=name, port=port, targetPort=port),
+        ]),
+        ingress: ingressTailscale(name=name, port=port),
+      },
+
+      uptimekuma: {
+        local name = 'uptimekuma',
+        local port = 3001,
+        tuwunel: helm.template(name=name, chart='../lib/charts/uptime-kuma', conf={
+          namespace: $.data.config.global.namespace,
+        }),
+        ingress: ingressTailscale(name=name, port=port, svcName='uptimekuma-uptime-kuma', funnel=true),
+      },
+
     },
   },
 }
