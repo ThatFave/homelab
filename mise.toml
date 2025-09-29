@@ -37,8 +37,3 @@ echo "Vendoring updated charts..."
 tk tool charts vendor
 """
 
-[tasks.apply]
-run = "tk apply environments/k3s.jsonnet"
-
-[tasks.prune]
-run = "tk prune environments/k3s.jsonnet"

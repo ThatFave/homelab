@@ -6,7 +6,7 @@
   },
 
   spec: {
-    apiServer: 'https://100.69.196.19:6443',
+    apiServer: 'https://100.117.59.71:6443',
     namespace: 'prod',
     resourceDefaults: {},
     expectVersions: {},
@@ -38,6 +38,7 @@
 
     k3s: {
       prod: namespace.new(name=$.data.config.global.namespace),
+
       longhorn_sealedsecret: import '../secrets/cifs-secret.sealed.json',
       tailscale_sealedsecret: import '../secrets/operator-oauth.sealed.json',
       vaultwarden_sealedsecret: import '../secrets/vaultwarden.sealed.json',
@@ -70,7 +71,7 @@
         }),
         ips: ipAddressPool.new(name='homelab')
              + ipAddressPool.spec.withAddresses(addresses=[
-               '10.20.0.200-10.20.0.240',
+               '10.20.0.150-10.20.0.160',
              ]),
         advertisement: l2Advertisement.new(name='l2advertisement')
                        + l2Advertisement.spec.withIpAddressPools(ipAddressPools='homelab'),
@@ -134,7 +135,7 @@
         local name = 'adguardhome',
         local image = 'adguard/adguardhome:latest',
         local port = 3000,
-        local ip = '10.20.0.200',
+        local ip = '10.20.0.150',
         deployment: deployment.new(
                       name=name,
                       replicas=1,
@@ -375,7 +376,7 @@
         local name = 'softserve',
         local image = 'charmcli/soft-serve:latest',
         local port = 23231,
-        local ip = '10.20.0.202',
+        local ip = '10.20.0.151',
         deployment: deployment.new(
                       name=name,
                       replicas=1,
@@ -386,7 +387,7 @@
                         ])
                         + container.mixin.withEnv(env=[
                           { name: 'SOFT_SERVE_INITIAL_ADMIN_KEYS', value: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC0P7n8nCfFc79DDIEQfVzRZ+zaX3L9F8NRqsXoirdWL' },
-                          { name: 'SOFT_SERVE_SSH_PUBLIC_URL', value: 'ssh://10.20.0.202:2222' },
+                          { name: 'SOFT_SERVE_SSH_PUBLIC_URL', value: 'ssh://10.20.0.151:2222' },
                         ]),
                       ],
                     )
