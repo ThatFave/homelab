@@ -37,3 +37,10 @@ echo "Vendoring updated charts..."
 tk tool charts vendor
 """
 
+[tasks.setup]
+run = """
+jb update
+echo '' > lib/charts/portainer/templates/tests/test-connection.yaml
+echo '' > lib/charts/uptime-kuma/templates/tests/test-connection.yaml
+echo '' > lib/charts/vaultwarden/templates/tests/test-connection.yaml
+"""

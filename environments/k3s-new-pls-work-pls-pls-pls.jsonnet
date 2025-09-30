@@ -270,10 +270,6 @@
         local wizarrImage = 'ghcr.io/wizarrrr/wizarr:latest',
         local wizarrPort = 5690,
 
-        media: persistentVolumeClaim.new(name=mediaName)
-               + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteMany'])
-               + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '300Gi' }),
-
         jellyfin: deployment.new(
                     name=jellyfinName,
                     replicas=1,
@@ -293,7 +289,7 @@
                     ],
                   )
                   + deployment.pvcVolumeMount(name='servarr-jellyfin', path='/config')
-                  + deployment.pvcVolumeMount(name=mediaName, path='/media'),
+                  + deployment.pvcVolumeMount(name='media', path='/media'),
         service: service.new(name=jellyfinName, selector={ name: jellyfinName }, ports=[
           servicePort.newNamed(name=jellyfinName, port=jellyfinPort, targetPort=jellyfinPort),
           servicePort.newNamed(name='ssh', port=2222, targetPort=2222),
