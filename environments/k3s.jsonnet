@@ -262,7 +262,6 @@
       },
 
       servarr: {
-        local mediaName = 'media',
         local jellyfinName = 'jellyfin',
         local jellyfinImage = 'linuxserver/jellyfin:latest',
         local jellyfinPort = 8096,
