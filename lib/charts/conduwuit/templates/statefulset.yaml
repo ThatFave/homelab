@@ -81,7 +81,10 @@ spec:
               value: info
             {{- range .Values.extraEnv }}
             - name: {{ .name | quote }}
-              value: {{ .value | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName | quote }}
+                  key: {{ .secretKey | quote }}
             {{- end }}
           readinessProbe:
             httpGet:

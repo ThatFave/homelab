@@ -6,7 +6,7 @@
   },
 
   spec: {
-    apiServer: 'https://100.117.59.71:6443',
+    apiServer: 'https://100.125.10.124:6443',
     namespace: 'prod',
     resourceDefaults: {},
     expectVersions: {},
@@ -25,6 +25,7 @@
     local containerPort = k.core.v1.containerPort,
     local deployment = k.apps.v1.deployment,
     local persistentVolumeClaim = k.core.v1.persistentVolumeClaim,
+    local persistentVolume = k.core.v1.persistentVolume,
     local service = k.core.v1.service,
     local servicePort = k.core.v1.servicePort,
     local ipAddressPool = m.metallb.v1beta1.ipAddressPool,
@@ -39,7 +40,6 @@
     k3s: {
       prod: namespace.new(name=$.data.config.global.namespace),
 
-      longhorn_sealedsecret: import '../secrets/cifs-secret.sealed.json',
       tailscale_sealedsecret: import '../secrets/operator-oauth.sealed.json',
       vaultwarden_sealedsecret: import '../secrets/vaultwarden.sealed.json',
       homarr_sealedsecret: import '../secrets/homarr.sealed.json',
@@ -150,14 +150,8 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-work', path='/opt/adguardhome/work')
+                      + deployment.pvcVolumeMount(name=name, path='/opt/adguardhome/work')
                       + deployment.pvcVolumeMount(name=name + '-config', path='/opt/adguardhome/conf'),
-          work: persistentVolumeClaim.new(name=name + '-work')
-                + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
-          config: persistentVolumeClaim.new(name=name + '-config')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
           service: service.new(name=name, selector={ name: name }, ports=[
                      servicePort.newNamed(name=name, port=port, targetPort=port),
                    ])
@@ -230,10 +224,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-config', path='/config'),
-          config: persistentVolumeClaim.new(name=name + '-config')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/config'),
           service: service.new(name=name, selector={ name: name }, ports=[
             servicePort.newNamed(name=name, port=port, targetPort=port),
           ]),
@@ -254,10 +245,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/srv/data'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/srv/data'),
           service: service.new(name=name, selector={ name: name }, ports=[
             servicePort.newNamed(name=name, port=port, targetPort=port),
           ]),
@@ -271,6 +259,23 @@
           local wizarrName = 'wizarr',
           local wizarrImage = 'ghcr.io/wizarrrr/wizarr:latest',
           local wizarrPort = 5690,
+          local nfsServer = '100.127.58.112',
+          local nfsPath = '/mnt/media/jellyfin',
+          local nfsSize = '800Gi',
+          local nfsName = 'media',
+          local nfsAccessModes = ['ReadWriteMany'],
+
+          nfsPv: persistentVolume.new(name=nfsName)
+                 + persistentVolume.mixin.spec.nfs.withServer(server=nfsServer)
+                 + persistentVolume.mixin.spec.nfs.withPath(path=nfsPath)
+                 + persistentVolume.mixin.spec.withAccessModes(accessModes=nfsAccessModes)
+                 + persistentVolume.mixin.spec.withStorageClassName(storageClassName='nfs')
+                 + persistentVolume.mixin.spec.withCapacity(capacity={ storage: nfsSize }),
+          nfsPvc: persistentVolumeClaim.new(name=nfsName)
+                  + persistentVolumeClaim.mixin.spec.withStorageClassName(storageClassName='nfs')
+                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=nfsAccessModes)
+                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: nfsSize })
+                  + persistentVolumeClaim.mixin.spec.withVolumeName(volumeName=nfsName),
 
           jellyfin: deployment.new(
                       name=jellyfinName,
@@ -280,17 +285,9 @@
                         + container.withPorts([
                           containerPort.newNamed(name=jellyfinName, containerPort=jellyfinPort),
                         ]),
-                        container.new(name='rsync', image='linuxserver/openssh-server:latest')
-                        + container.withPorts([
-                          containerPort.newNamed(name='ssh', containerPort=2222),
-                        ])
-                        + container.withEnv(env=[
-                          { name: 'PUBLIC_KEY', value: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC0P7n8nCfFc79DDIEQfVzRZ+zaX3L9F8NRqsXoirdWL' },
-                          { name: 'DOCKER_MODS', value: 'linuxserver/mods:openssh-server-rsync' },
-                        ]),
                       ],
                     )
-                    + deployment.pvcVolumeMount(name='servarr-jellyfin', path='/config')
+                    + deployment.pvcVolumeMount(name='jellyfin', path='/config')
                     + deployment.pvcVolumeMount(name='media', path='/media'),
           service: service.new(name=jellyfinName, selector={ name: jellyfinName }, ports=[
             servicePort.newNamed(name=jellyfinName, port=jellyfinPort, targetPort=jellyfinPort),
@@ -309,13 +306,7 @@
                     ],
                   )
                   + deployment.pvcVolumeMount(name=wizarrName + '-database', path='/data/database')
-                  + deployment.pvcVolumeMount(name=wizarrName + '-wizard-steps', path='/data/wizard_steps'),
-          wizarrDatabase: persistentVolumeClaim.new(name=wizarrName + '-database')
-                          + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                          + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
-          wizarrSteps: persistentVolumeClaim.new(name=wizarrName + '-wizard-steps')
-                       + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                       + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
+                  + deployment.pvcVolumeMount(name=wizarrName + '-steps', path='/data/wizard_steps'),
           wizarrService: service.new(name=wizarrName, selector={ name: wizarrName }, ports=[
             servicePort.newNamed(name=wizarrName, port=wizarrPort, targetPort=wizarrPort),
           ]),
@@ -336,10 +327,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/app/backend/storage'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/app/backend/storage'),
           service: service.new(name=name, selector={ name: name }, ports=[
             servicePort.newNamed(name=name, port=port, targetPort=port),
           ]),
@@ -360,10 +348,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/downloads'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '1Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/downloads'),
           service: service.new(name=name, selector={ name: name }, ports=[
             servicePort.newNamed(name=name, port=port, targetPort=port),
           ]),
@@ -389,10 +374,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/soft-serve'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/soft-serve'),
           serviceDns: service.new(name=name, selector={ name: name }, ports=[
                         servicePort.newNamed(name='ssh', port=2222, targetPort=port),
                       ])
@@ -433,10 +415,7 @@
                           + container.mixin.withEnv(env={ name: 'TS3SERVER_LICENSE', value: 'accept' }),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/data'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/data'),
           service: service.new(name=name, selector={ name: name }, ports=[
                      servicePort.newNamed(name='ts', port=9987, targetPort=9987),
                      servicePort.newNamed(name='file', port=30033, targetPort=30033),
@@ -464,7 +443,17 @@
                 allow_federation: 'true',
                 trusted_servers: ['matrix.org'],
               },
-              extraEnv: [{ name: 'TUWUNEL_REGISTRATION_TOKEN', value: { valueFrom: { secretKeyRef: { name: 'tuwunel-secret', key: 'registration_token' } } } }],
+              persistence: {
+                data: {
+                  size: '1Gi',
+                  // existingClaim: 'tuwunel',
+                },
+              },
+              extraEnv: [{
+                name: 'TUWUNEL_REGISTRATION_TOKEN',
+                secretName: 'tuwunel-secret',
+                secretKey: 'registration_token',
+              }],
             },
           }),
           ingress: ingressTailscale(name=name, port=port, svcName='tuwunel-conduwuit', funnel=true),
@@ -484,10 +473,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/data'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/data'),
           service: service.new(name=name, selector={ name: name }, ports=[
             servicePort.newNamed(name=name, port=port, targetPort=port),
           ]),
@@ -511,10 +497,7 @@
                           ]),
                         ],
                       )
-                      + deployment.pvcVolumeMount(name=name + '-data', path='/data'),
-          config: persistentVolumeClaim.new(name=name + '-data')
-                  + persistentVolumeClaim.mixin.spec.withAccessModes(accessModes=['ReadWriteOnce'])
-                  + persistentVolumeClaim.mixin.spec.resources.withRequests(requests={ storage: '5Gi' }),
+                      + deployment.pvcVolumeMount(name=name, path='/data'),
           service: service.new(name=name, selector={ name: name }, ports=[
             servicePort.newNamed(name=name, port=port, targetPort=port),
           ]),
@@ -524,8 +507,13 @@
         uptimekuma: {
           local name = 'uptimekuma',
           local port = 3001,
-          tuwunel: helm.template(name=name, chart='../lib/charts/uptime-kuma', conf={
+          uptimekuma: helm.template(name=name, chart='../lib/charts/uptime-kuma', conf={
             namespace: $.data.config.global.namespace,
+            values: {
+              volume: {
+                existingClaim: 'uptimekuma',
+              },
+            },
           }),
           ingress: ingressTailscale(name=name, port=port, svcName='uptimekuma-uptime-kuma', funnel=true),
         },

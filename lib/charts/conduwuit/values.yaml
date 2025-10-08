@@ -55,7 +55,7 @@ persistence:
     existingClaim:
     storageClass:
     accessMode: ReadWriteOnce
-    size: 16Gi
+    size: 1Gi
 
 resources:
   requests:
